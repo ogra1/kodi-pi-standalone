@@ -223,6 +223,7 @@ parts:
       - libtheora-dev
       - libtiff5-dev
       - libtinyxml-dev
+      - libtool
       - libtwolame-dev
       - libunistring-dev
       - libva-dev
