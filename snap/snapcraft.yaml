@@ -142,6 +142,8 @@ parts:
       - CXXLAGS: "-Os -fomit-frame-pointer"
     build-packages:
       - autoconf
+      - automake
+      - autotools-dev
       - cleancss
       - default-libmysqlclient-dev
       - doxygen
