@@ -146,6 +146,7 @@ parts:
       - doxygen
       - flite1-dev
       - frei0r-plugins-dev
+      - g++
       - ladspa-sdk
       - libaom-dev
       - libasound2-dev
@@ -186,6 +187,7 @@ parts:
       - liblilv-dev
       - liblirc-dev
       - liblzma-dev
+      - liblzo2-dev
       - libmicrohttpd-dev
       - libmp3lame-dev
       - libmysofa-dev
