@@ -143,6 +143,7 @@ parts:
     build-packages:
       - autoconf
       - automake
+      - autopoint
       - autotools-dev
       - cleancss
       - default-libmysqlclient-dev
