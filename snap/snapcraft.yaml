@@ -1,0 +1,365 @@
+name: kodi-pi-standalone
+base: core20
+adopt-info: kodi
+summary: Kodi standalone kiosk snap with RPi MMAL hardware acceleration
+description: |
+  A standalone kodi snap (not usable wih X11, wayland or Mir) with the MMAL
+  hardware acceleration patches for the Raspberry Pi.
+
+  This snap is built from the MMAL enabled branch at
+  https://github.com/PIPplware/xbmc.git
+  It ships with all default binary addons included.
+
+grade: stable
+confinement: devmode
+compression: lzo
+
+architectures:
+  - build-on: armhf
+    run-on: [ armhf, arm64 ]
+
+apps:
+  kodi-pi:
+    desktop: usr/share/applications/kodi.desktop
+    command: bin/desktop-launch $SNAP/usr/bin/kodi
+    daemon: simple
+    environment:
+      LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+      PYTHONPATH: "$SNAP/usr/lib/python2.7:$SNAP/usr/lib/python2.7/plat-arm-linux-gnueabihf:$SNAP/usr/lib/python2.7/lib-tk:$SNAP/usr/lib/python2.7/lib-dynload:$SNAP/usr/lib/python2.7/dist-packages:$PYTHONPATH"
+    plugs:
+      - audio-record
+      - audio-playback
+      - avahi-control
+      - camera
+      - desktop
+      - dvb
+      - framebuffer
+      - hardware-observe
+      - home
+      - jack1
+      - mount-observe
+      - network
+      - network-bind
+      - opengl
+      - optical-drive
+      - process-control
+      - removable-media
+      - screen-inhibit-control
+      - shutdown
+      - udisks2
+      - unity7
+      - upower-observe
+      - x11
+
+layout:
+  /usr/lib/arm-linux-gnueabihf/kodi:
+    bind: $SNAP/usr/lib/arm-linux-gnueabihf/kodi
+  /usr/share/kodi:
+    bind: $SNAP/usr/share/kodi
+  /usr/lib/kodi:
+    bind: $SNAP/usr/lib/kodi
+  /usr/share/X11/xkb:
+    bind: $SNAP/usr/share/X11/xkb
+
+parts:
+  pi-libs:
+    source: https://github.com/raspberrypi/firmware.git
+    source-depth: 1
+    plugin: nil
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr
+      cp -av hardfp/opt/vc/bin $SNAPCRAFT_PART_INSTALL/usr/
+      cp -av hardfp/opt/vc/lib $SNAPCRAFT_PART_INSTALL/usr/
+      cp -av hardfp/opt/vc/include $SNAPCRAFT_PART_INSTALL/usr/
+      # we want to link against mesa, drop GLES and EGL includes
+      rm -rf $SNAPCRAFT_PART_INSTALL/usr/include/*GL*
+    prime:
+      - -usr/include
+  glib-only:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: glib-only
+    plugin: make
+    build-packages:
+      - libglib2.0-dev
+    stage-packages:
+      - libglib2.0-bin
+    override-prime: |
+      snapcraftctl prime
+      # force armhf
+      sed -i 's/export SNAP_LAUNCHER/export ARCH="arm-linux-gnueabihf"\nexport SNAP_LAUNCHER/' bin/desktop-launch
+  kodi:
+    plugin: cmake
+    source: https://github.com/PIPplware/xbmc.git
+    source-branch: leia_pi4
+    after: [ pi-libs ]
+    cmake-parameters:
+      - -DVERBOSE=1
+      - -DCORE_SYSTEM_NAME=linux
+      - -DCORE_PLATFORM_NAME=gbm
+      - -DGBM_RENDER_SYSTEM=gles
+      - -DENABLE_VAAPI=OFF
+      - -DENABLE_VDPAU=OFF
+      - -DENABLE_MMAL=ON
+      - -DENABLE_OPENGL=OFF
+      - -DWITH_CPU=cortex-a7
+      - -DWITH_ARCH=armv7l
+      - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_STAGE}/usr
+      - -DENABLE_OPENGLES=ON
+      - -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DENABLE_AIRTUNES=ON
+      - -DENABLE_ALSA=ON
+      - -DENABLE_AVAHI=ON
+      - -DENABLE_BLURAY=ON
+      - -DENABLE_CEC=ON
+      - -DENABLE_DBUS=ON
+      - -DENABLE_DVDCSS=ON
+      - -DENABLE_EGL=ON
+      - -DENABLE_EVENTCLIENTS=ON
+      - -DENABLE_INTERNAL_FFMPEG=ON
+      - -DENABLE_INTERNAL_CROSSGUID=ON
+      - -DENABLE_INTERNAL_FMT=ON
+      - -DENABLE_INTERNAL_RapidJSON=ON
+      - -DENABLE_INTERNAL_FLATBUFFERS=ON
+      - -DENABLE_MICROHTTPD=ON
+      - -DENABLE_MYSQLCLIENT=ON
+      - -DENABLE_NFS=ON
+      - -DENABLE_OPENSSL=ON
+      - -DENABLE_OPTICAL=ON
+      - -DENABLE_PULSEAUDIO=ON
+      - -DENABLE_SMBCLIENT=ON
+      - -DENABLE_SSH=ON
+      - -DENABLE_UDEV=ON
+      - -DENABLE_UPNP=ON
+      - -DENABLE_XSLT=ON
+      - -DENABLE_LIRC=ON
+      - -DENABLE_APP_AUTONAME=OFF
+      - -DENABLE_LCMS2=OFF
+      - -DENABLE_SNDIO=OFF
+      - -DENABLE_MDNS=OFF
+    build-environment:
+      - CFLAGS: "-Os -fomit-frame-pointer"
+      - CXXLAGS: "-Os -fomit-frame-pointer"
+    build-packages:
+      - cleancss
+      - default-libmysqlclient-dev
+      - doxygen
+      - flite1-dev
+      - frei0r-plugins-dev
+      - ladspa-sdk
+      - libaom-dev
+      - libasound2-dev
+      - libass-dev
+      - libavc1394-dev
+      - libbluetooth-dev
+      - libbluray-dev
+      - libbs2b-dev
+      - libbz2-dev
+      - libcaca-dev
+      - libcap-dev
+      - libcdio-dev
+      - libcdio-paranoia-dev
+      - libcec-dev
+      - libcodec2-dev
+      - libcurl4-gnutls-dev
+      - libdc1394-22-dev
+      - libdrm-dev
+      - libegl-dev
+      - libfdk-aac-dev
+      - libfmt-dev
+      - libfontconfig1-dev
+      - libfreetype6-dev
+      - libfribidi-dev
+      - libfstrcmp-dev
+      - libgbm-dev
+      - libgif-dev
+      - libgl1-mesa-dev
+      - libgles-dev
+      - libglx-dev
+      - libgme-dev
+      - libgnutls28-dev
+      - libgsm1-dev
+      - libiec61883-dev
+      - libiso9660-dev
+      - libjack-dev
+      - liblensfun-dev
+      - liblilv-dev
+      - liblirc-dev
+      - liblzma-dev
+      - libmicrohttpd-dev
+      - libmp3lame-dev
+      - libmysofa-dev
+      - libomxil-bellagio-dev
+      - libopenal-dev
+      - libopencore-amrnb-dev
+      - libopencore-amrwb-dev
+      - libopenjp2-7-dev
+      - libopenmpt-dev
+      - libopus-dev
+      - libplist-dev
+      - libpulse-dev
+      - librsvg2-dev
+      - librubberband-dev
+      - libsctp-dev
+      - libsdl2-dev
+      - libshine-dev
+      - libsnappy-dev
+      - libsoxr-dev
+      - libspeex-dev
+      - libsqlite3-dev
+      - libssh-gcrypt-dev
+      - libssl-dev
+      - libtag1-dev
+      - libtesseract-dev
+      - libtheora-dev
+      - libtiff5-dev
+      - libtinyxml-dev
+      - libtwolame-dev
+      - libunistring-dev
+      - libva-dev
+      - libvdpau-dev
+      - libvidstab-dev
+      - libvo-amrwbenc-dev
+      - libvorbis-dev
+      - libvpx-dev
+      - libwavpack-dev
+      - libwebp-dev
+      - libx264-dev
+      - libx265-dev
+      - libxcb-shape0-dev
+      - libxcb-shm0-dev
+      - libxcb-xfixes0-dev
+      - libxml2-dev
+      - libxmu-dev
+      - libxrandr-dev
+      - libxslt1-dev
+      - libxt-dev
+      - libxv-dev
+      - libxvidcore-dev
+      - libxvmc-dev
+      - libzmq3-dev
+      - libzvbi-dev
+      - nasm
+      - openjdk-11-jre
+      - pkg-config
+      - python2-dev
+      - python3-dev
+      - texinfo
+      - zlib1g-dev
+    override-build: |
+      snapcraftctl build
+      make -C tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr
+      sed -i 's;^Icon=kodi;Icon=/usr/share/icons/hicolor/256x256/apps/kodi.png;' \
+          $SNAPCRAFT_PART_INSTALL/usr/share/applications/kodi.desktop
+      # set version
+      VER="$(grep VERSION_CODE version.txt | sed 's/^.* //')"
+      snapcraftctl set-version $VER
+    stage-packages:
+      - apulse
+      - fbset
+      - libasn1-8-heimdal
+      - libasound2
+      - libass9
+      - libasyncns0
+      - libavahi-client3
+      - libavahi-common3
+      - libbluetooth3
+      - libbluray2
+      - libbrotli1
+      - libcdio18
+      - libcec4
+      - libcurl3-gnutls
+      - libdrm2
+      - libegl1
+      - libevdev2
+      - libflac8
+      - libfontconfig1
+      - libfreetype6
+      - libfribidi0
+      - libfstrcmp0
+      - libgbm1
+      - libgif7
+      - libgl1-mesa-dri
+      - libgles2
+      - libgraphite2-3
+      - libgssapi3-heimdal
+      - libgudev-1.0-0
+      - libharfbuzz0b
+      - libhcrypto4-heimdal
+      - libheimbase1-heimdal
+      - libheimntlm0-heimdal
+      - libhx509-5-heimdal
+      - libicu66
+      - libinput10
+      - libjansson4
+      - libjpeg-turbo8
+      - libkrb5-26-heimdal
+      - libldap-2.4-2
+      - libldb2
+      - liblirc-client0
+      - liblzo2-2
+      - libmicrohttpd12
+      - libmtdev1
+      - libmysqlclient21
+      - libnfs13
+      - libnghttp2-14
+      - libogg-dbg
+      - libp8-platform2
+      - libpcrecpp0v5
+      - libpng16-16
+      - libpsl5
+      - libpulse0
+      - libpython2.7
+      - libroken18-heimdal
+      - librtmp1
+      - libsasl2-2
+      - libsmbclient
+      - libsndfile1
+      - libssh-4
+      - libtag1v5-vanilla
+      - libtalloc2
+      - libtdb1
+      - libtevent0
+      - libtinyxml2.6.2v5
+      - libvorbis0a
+      - libvorbisenc2
+      - libwacom2
+      - libwayland-server0
+      - libwbclient-sssd
+      - libwbclient0
+      - libwind0-heimdal
+      - libx11-6
+      - libxau6
+      - libxcb1
+      - libxdmcp6
+      - libxext6
+      - libxkbcommon0
+      - libxml2
+      - libxrandr2
+      - libxrender1
+      - libxslt1.1
+      - samba-libs
+      - samba-common-bin
+      - unzip
+      - x11-xserver-utils
+      - zip
+  cleanup:
+    plugin: nil
+    after: [ kodi ]
+    override-prime: |
+      # delete any remaining headers
+      find . -name '*.h' -delete
+      # link mesa libs to correct search names
+      cd ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/
+      ln -sf libEGL.so.1 libEGL.so || true
+      ln -sf libGLESv2.so.2 libGLESv2.so || true
+      # clean up doc dirs
+      find ${SNAPCRAFT_PRIME}/usr/share/doc/ -type f -not -name 'copyright' -delete || true
+      rm ${SNAPCRAFT_PRIME}/usr/share/doc/*/*.gz 2>/dev/null || true
+      rm ${SNAPCRAFT_PRIME}/usr/share/doc/*/README* 2>/dev/null || true
+      find ${SNAPCRAFT_PRIME}/usr/share -type d -empty -delete || true
+      # drop useless dri drivers
+      find ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/dri/ -type f -not -name 'vc4_dri.so' \
+          -not -name 'v3d_dri.so' -not -name 'swrast_dri.so' -delete || tru
+      # move addons around to proper search location
+      mv ${SNAPCRAFT_PRIME}/usr/lib/kodi/addons ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/
