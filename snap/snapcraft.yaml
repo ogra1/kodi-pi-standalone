@@ -182,6 +182,7 @@ parts:
       - libgnutls28-dev
       - libgsm1-dev
       - libiec61883-dev
+      - libinput-dev
       - libiso9660-dev
       - libjack-dev
       - liblensfun-dev
