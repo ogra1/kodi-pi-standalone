@@ -192,7 +192,7 @@ parts:
       - libmicrohttpd-dev
       - libmp3lame-dev
       - libmysofa-dev
-      - libnss3-dev
+      - libnfs-dev
       - libomxil-bellagio-dev
       - libopenal-dev
       - libopencore-amrnb-dev
