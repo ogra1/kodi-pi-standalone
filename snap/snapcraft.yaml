@@ -151,6 +151,7 @@ parts:
       - libaom-dev
       - libasound2-dev
       - libass-dev
+      - libavahi-client-dev
       - libavc1394-dev
       - libbluetooth-dev
       - libbluray-dev
@@ -191,6 +192,7 @@ parts:
       - libmicrohttpd-dev
       - libmp3lame-dev
       - libmysofa-dev
+      - libnss3-dev
       - libomxil-bellagio-dev
       - libopenal-dev
       - libopencore-amrnb-dev
