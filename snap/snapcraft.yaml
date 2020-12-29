@@ -207,6 +207,7 @@ parts:
       - libsctp-dev
       - libsdl2-dev
       - libshine-dev
+      - libsmbclient-dev
       - libsnappy-dev
       - libsoxr-dev
       - libspeex-dev
