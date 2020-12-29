@@ -250,6 +250,7 @@ parts:
       - pkg-config
       - python2-dev
       - python3-dev
+      - swig
       - texinfo
       - zlib1g-dev
     override-build: |
