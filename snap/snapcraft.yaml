@@ -376,4 +376,5 @@ parts:
       find ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/dri/ -type f -not -name 'vc4_dri.so' \
           -not -name 'v3d_dri.so' -not -name 'swrast_dri.so' -delete || tru
       # move addons around to proper search location
-      mv -f ${SNAPCRAFT_PRIME}/usr/lib/kodi/addons ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/
+      rm -rf ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/addons
+      mv ${SNAPCRAFT_PRIME}/usr/lib/kodi/addons ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/
