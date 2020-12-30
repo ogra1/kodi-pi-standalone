@@ -278,6 +278,7 @@ parts:
       - libbluetooth3
       - libbluray2
       - libbrotli1
+      - libc-bin
       - libcdio18
       - libcec4
       - libcurl3-gnutls
@@ -350,6 +351,7 @@ parts:
       - libxrandr2
       - libxrender1
       - libxslt1.1
+      - python-pycryptodome
       - samba-libs
       - samba-common-bin
       - unzip
