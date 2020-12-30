@@ -60,6 +60,8 @@ layout:
     bind: $SNAP/usr/lib/kodi
   /usr/share/X11/xkb:
     bind: $SNAP/usr/share/X11/xkb
+  /var/lib/dbus/machine-id:
+    bind-file: /var/lib/snapd/hostfs/var/lib/dbus/machine-id
 
 parts:
   pi-libs:
@@ -316,6 +318,8 @@ parts:
       - libmysqlclient21
       - libnfs13
       - libnghttp2-14
+      - libnss3
+      - libnspr4
       - libogg-dbg
       - libp8-platform2
       - libpcrecpp0v5
