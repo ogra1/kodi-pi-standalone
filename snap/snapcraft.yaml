@@ -61,7 +61,7 @@ layout:
   /usr/share/X11/xkb:
     bind: $SNAP/usr/share/X11/xkb
   /var/lib/dbus/machine-id:
-    bind-file: /var/lib/snapd/hostfs/var/lib/dbus/machine-id
+    bind-file: $SNAP_COMMON/machine-id
 
 parts:
   pi-libs:
@@ -382,3 +382,8 @@ parts:
       # move addons around to proper search location
       rm -rf ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/addons
       mv ${SNAPCRAFT_PRIME}/usr/lib/kodi/addons ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/
+  hook-helper:
+    plugin: nil
+    after: [ kodi ]
+    stage-packages:
+      - uuid-runtime
