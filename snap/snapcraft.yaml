@@ -27,9 +27,11 @@ apps:
       LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
       PYTHONPATH: "$SNAP/usr/lib/python2.7:$SNAP/usr/lib/python2.7/plat-arm-linux-gnueabihf:$SNAP/usr/lib/python2.7/lib-tk:$SNAP/usr/lib/python2.7/lib-dynload:$SNAP/usr/lib/python2.7/dist-packages:$PYTHONPATH"
     plugs:
+      - alsa
       - audio-record
       - audio-playback
       - avahi-control
+      - bluetooth
       - camera
       - desktop
       - dvb
@@ -37,15 +39,18 @@ apps:
       - hardware-observe
       - home
       - jack1
+      - joystick
       - mount-observe
       - network
       - network-bind
+      - network-control
       - opengl
       - optical-drive
       - process-control
       - removable-media
       - screen-inhibit-control
       - shutdown
+      - system-observe
       - udisks2
       - unity7
       - upower-observe
