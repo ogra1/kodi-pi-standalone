@@ -31,7 +31,7 @@ apps:
       - audio-record
       - audio-playback
       - avahi-control
-      - bluetooth
+      - bluetooth-control
       - camera
       - desktop
       - dvb
