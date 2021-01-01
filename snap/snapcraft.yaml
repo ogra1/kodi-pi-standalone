@@ -48,6 +48,7 @@ apps:
       - opengl
       - optical-drive
       - process-control
+      - pulseaudio
       - removable-media
       - screen-inhibit-control
       - shutdown
