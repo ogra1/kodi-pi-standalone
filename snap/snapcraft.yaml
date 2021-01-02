@@ -301,8 +301,10 @@ parts:
       - libfstrcmp0
       - libgbm1
       - libgif7
+      - libgl1
       - libgl1-mesa-dri
       - libgles2
+      - libglx0
       - libgraphite2-3
       - libgssapi3-heimdal
       - libgudev-1.0-0
