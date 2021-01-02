@@ -269,7 +269,7 @@ parts:
       - zlib1g-dev
     override-build: |
       snapcraftctl build
-      make -C tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr
+      make -j4 -C tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr
       sed -i 's;^Icon=kodi;Icon=/usr/share/icons/hicolor/256x256/apps/kodi.png;' \
           $SNAPCRAFT_PART_INSTALL/usr/share/applications/kodi.desktop
       # set version
