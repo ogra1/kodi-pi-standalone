@@ -120,6 +120,7 @@ parts:
       - -DENABLE_ALSA=ON
       - -DENABLE_AVAHI=ON
       - -DENABLE_BLURAY=ON
+      - -DENABLE_BLUETOOTH=ON
       - -DENABLE_CEC=ON
       - -DENABLE_DBUS=ON
       - -DENABLE_DVDCSS=ON
