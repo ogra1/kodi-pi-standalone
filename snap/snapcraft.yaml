@@ -33,6 +33,7 @@ apps:
       - audio-playback
       - avahi-control
       - bluetooth-control
+      - bluez
       - camera
       - desktop
       - dvb
