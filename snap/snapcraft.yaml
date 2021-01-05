@@ -368,6 +368,7 @@ parts:
       - libxrandr2
       - libxrender1
       - libxslt1.1
+      - pulseaudio-utils
       - python-pycryptodome
       - samba-libs
       - samba-common-bin
