@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# always power on bluetooth if we can access it
+if snapctl is-connected bluez; then
+  # allow pulse to switch to BT audio devices on connect
+  if snapctl is-connected audio-playback; then
+    # only load the module if it is not there yet
+    if ! pactl list short | grep -q module-switch-on-connect; then
+      pactl load-module module-switch-on-connect >/dev/null 2>&1 || true
+	fi
+  fi
+  echo -e 'power on'| bluetoothctl >/dev/null 2>&1 || true
+fi
+
+exec "$@"

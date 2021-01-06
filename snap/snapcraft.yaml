@@ -21,7 +21,7 @@ architectures:
 apps:
   kodi-pi-standalone:
     desktop: usr/share/applications/kodi.desktop
-    command: bin/desktop-launch $SNAP/usr/bin/kodi
+    command: bin/desktop-launch $SNAP/bin/bt-launch $SNAP/usr/bin/kodi
     daemon: simple
     environment:
       LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
@@ -32,6 +32,7 @@ apps:
       - audio-record
       - audio-playback
       - avahi-control
+      - avahi-observe
       - bluetooth-control
       - bluez
       - camera
@@ -49,7 +50,6 @@ apps:
       - opengl
       - optical-drive
       - process-control
-      - pulseaudio
       - removable-media
       - screen-inhibit-control
       - shutdown
@@ -401,3 +401,7 @@ parts:
     after: [ kodi ]
     stage-packages:
       - uuid-runtime
+  bt-audio-helper:
+    plugin: dump
+    after: [ hook-helper ]
+    source: helpers
