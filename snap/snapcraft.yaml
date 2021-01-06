@@ -41,6 +41,7 @@ apps:
       - framebuffer
       - hardware-observe
       - home
+      - hostname-control
       - jack1
       - joystick
       - mount-observe
@@ -54,6 +55,8 @@ apps:
       - screen-inhibit-control
       - shutdown
       - system-observe
+      - time-control
+      - timezone-control
       - udisks2
       - unity7
       - upower-observe
