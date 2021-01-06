@@ -60,6 +60,7 @@ apps:
       - udisks2
       - unity7
       - upower-observe
+      - vcio
       - x11
 
 layout:
