@@ -405,3 +405,5 @@ parts:
     plugin: dump
     after: [ hook-helper ]
     source: helpers
+    stage-packages:
+      - coreutils

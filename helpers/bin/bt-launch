@@ -3,7 +3,7 @@
 # always power on bluetooth if we can access it
 if snapctl is-connected bluez; then
   echo "powering on BT"
-  echo -e 'power on' | $SNAP/usr/bin/bluetoothctl 2>&1 || true
+  $SNAP/bin/echo -e 'power on' | $SNAP/usr/bin/bluetoothctl 2>&1 || true
   echo "BT powered up"
   # allow pulse to switch to BT audio devices on connect
   if snapctl is-connected audio-playback; then
