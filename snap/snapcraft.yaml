@@ -51,6 +51,7 @@ apps:
       - opengl
       - optical-drive
       - process-control
+      - raw-usb
       - removable-media
       - screen-inhibit-control
       - shutdown
@@ -59,7 +60,6 @@ apps:
       - timezone-control
       - udisks2
       - uhid
-      - uinput
       - upower-observe
       - vcio
       - x11
