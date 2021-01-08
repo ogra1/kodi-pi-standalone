@@ -11,7 +11,7 @@ description: |
   It ships with all default binary addons included.
 
 grade: stable
-confinement: devmode
+confinement: strict
 compression: lzo
 
 architectures:
