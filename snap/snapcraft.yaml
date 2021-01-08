@@ -58,7 +58,7 @@ apps:
       - time-control
       - timezone-control
       - udisks2
-      - unity7
+      - uhid
       - upower-observe
       - vcio
       - x11
