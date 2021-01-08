@@ -37,6 +37,7 @@ apps:
       - bluez
       - camera
       - desktop
+      - device-buttons
       - dvb
       - framebuffer
       - hardware-observe
