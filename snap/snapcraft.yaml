@@ -59,7 +59,7 @@ apps:
       - timezone-control
       - udisks2
       - uhid
-      - uninput
+      - uinput
       - upower-observe
       - vcio
       - x11
