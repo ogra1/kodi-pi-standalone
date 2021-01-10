@@ -115,7 +115,6 @@ parts:
       - -DHAVE_RANDR_LIB=""
     build-packages:
       - libudev-dev
-      - libxrandr-dev
       - python3-dev
       - swig
     build-environment:
