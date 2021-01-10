@@ -28,7 +28,6 @@ apps:
       LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
       PYTHONPATH: "$SNAP/usr/lib/python2.7:$SNAP/usr/lib/python2.7/plat-arm-linux-gnueabihf:$SNAP/usr/lib/python2.7/lib-tk:$SNAP/usr/lib/python2.7/lib-dynload:$SNAP/usr/lib/python2.7/dist-packages:$PYTHONPATH"
       HOME: $SNAP_DATA
-    slots: [ x11 ]
     plugs:
       - alsa
       - audio-record
@@ -39,7 +38,6 @@ apps:
       - camera
       - desktop
       - device-buttons
-      - dummy
       - dvb
       - framebuffer
       - hardware-observe
@@ -65,11 +63,6 @@ apps:
       - uhid
       - upower-observe
       - vcio
-
-# silly hack to allow access to /dev/input devices
-plugs:
-  dummy:
-    interface: x11
 
 layout:
   /usr/lib/arm-linux-gnueabihf/kodi:
@@ -109,11 +102,38 @@ parts:
       snapcraftctl prime
       # force armhf
       sed -i 's/export SNAP_LAUNCHER/export ARCH="arm-linux-gnueabihf"\nexport SNAP_LAUNCHER/' bin/desktop-launch
+  libcec:
+    plugin: cmake
+    after: [ pi-libs ]
+    source: https://github.com/Pulse-Eight/libcec.git
+    cmake-parameters:
+      - -DRPI_INCLUDE_DIR=${SNAPCRAFT_STAGE}/usr/include
+      - -DRPI_LIB_DIR=${SNAPCRAFT_STAGE}/usr/lib
+      - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_PART_INSTALL}/usr
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_INSTALL_LIBDIR=/usr/lib
+    build-packages:
+      - libudev-dev
+      - libxrandr-dev
+      - python3-dev
+      - swig
+    build-environment:
+      - LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:${SNAPCRAFT_STAGE}/usr/lib"
+    override-build: |
+      # build p8-platform submodule first
+      cd src/platform
+      mkdir build
+      cd build
+      cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DBUILD_SHARED_LIBS=1 ..
+      make -j4
+      DESTDIR=$SNAPCRAFT_PART_INSTALL make install 
+      cd ../../../
+      snapcraftctl build
   kodi:
     plugin: cmake
     source: https://github.com/PIPplware/xbmc.git
     source-branch: leia_pi4
-    after: [ pi-libs ]
+    after: [ libcec ]
     cmake-parameters:
       - -DVERBOSE=1
       - -DCORE_SYSTEM_NAME=linux
@@ -189,7 +209,6 @@ parts:
       - libcap-dev
       - libcdio-dev
       - libcdio-paranoia-dev
-      - libcec-dev
       - libcodec2-dev
       - libcurl4-gnutls-dev
       - libdc1394-22-dev
@@ -305,7 +324,6 @@ parts:
       - libbrotli1
       - libc-bin
       - libcdio18
-      - libcec4
       - libcurl3-gnutls
       - libdrm2
       - libegl1
@@ -346,7 +364,6 @@ parts:
       - libnss3
       - libnspr4
       - libogg-dbg
-      - libp8-platform2
       - libpcrecpp0v5
       - libpng16-16
       - libpsl5
