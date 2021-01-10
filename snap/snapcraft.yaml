@@ -112,6 +112,7 @@ parts:
       - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_PART_INSTALL}/usr
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DCMAKE_INSTALL_LIBDIR=/usr/lib
+      - -DHAVE_RANDR_LIB=""
     build-packages:
       - libudev-dev
       - libxrandr-dev
