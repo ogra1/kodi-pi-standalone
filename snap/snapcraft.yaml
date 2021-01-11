@@ -102,6 +102,8 @@ parts:
       snapcraftctl prime
       # force armhf
       sed -i 's/export SNAP_LAUNCHER/export ARCH="arm-linux-gnueabihf"\nexport SNAP_LAUNCHER/' bin/desktop-launch
+      # do not try to update xdg links in home (HOME is SNAP_COMMON)
+      sed -i '/# Create links for user-dirs.dirs/,+21 s/^/#/' bin/desktop-launch
   libcec:
     plugin: cmake
     after: [ pi-libs ]
