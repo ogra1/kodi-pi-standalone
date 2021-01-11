@@ -308,7 +308,12 @@ parts:
       - zlib1g-dev
     override-build: |
       snapcraftctl build
+      # build addons
       make -j4 -C tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr
+      # move addons to correct install path
+      mv ${SNAPCRAFT_PART_INSTALL}/usr/lib/kodi/addons \
+          ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/kodi/
+      # fix desktop file
       sed -i 's;^Icon=kodi;Icon=/usr/share/icons/hicolor/256x256/apps/kodi.png;' \
           $SNAPCRAFT_PART_INSTALL/usr/share/applications/kodi.desktop
       # set version
@@ -423,13 +428,11 @@ parts:
       find ${SNAPCRAFT_PRIME}/usr/share/doc/ -type f -not -name 'copyright' -delete || true
       rm ${SNAPCRAFT_PRIME}/usr/share/doc/*/*.gz 2>/dev/null || true
       rm ${SNAPCRAFT_PRIME}/usr/share/doc/*/README* 2>/dev/null || true
+      rm ${SNAPCRAFT_PRIME}/usr/share/man* 2>/dev/null || true
       find ${SNAPCRAFT_PRIME}/usr/share -type d -empty -delete || true
       # drop useless dri drivers
       find ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/dri/ -type f -not -name 'vc4_dri.so' \
           -not -name 'v3d_dri.so' -not -name 'swrast_dri.so' -delete || tru
-      # move addons around to proper search location
-      rm -rf ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/addons
-      mv ${SNAPCRAFT_PRIME}/usr/lib/kodi/addons ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/kodi/
   hook-helper:
     plugin: nil
     after: [ kodi ]
