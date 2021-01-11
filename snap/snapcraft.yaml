@@ -130,8 +130,10 @@ parts:
       cd ../../../
       # force skip xrandr
       sed -i 's/check_library_exists(Xrandr/# check_library_exists(Xrandr/' src/libcec/cmake/CheckPlatformSupport.cmake
-      # build libcec
+      # finally build libcec
       snapcraftctl build
+    stage-packages:
+      - libpython3.8
   kodi:
     plugin: cmake
     source: https://github.com/PIPplware/xbmc.git
