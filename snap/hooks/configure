@@ -1,3 +1,3 @@
 #! /bin/sh
 
-[ -e $SNAP_COMMON/machine-id ] || $SNAP/usr/bin/uuidgen | tr -d - >$SNAP_COMMON/machine-id
+[ -e $SNAP_COMMON/.machine-id ] || $SNAP/usr/bin/uuidgen | tr -d - >$SNAP_COMMON/.machine-id

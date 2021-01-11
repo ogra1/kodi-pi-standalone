@@ -74,7 +74,7 @@ layout:
   /usr/share/X11/xkb:
     bind: $SNAP/usr/share/X11/xkb
   /var/lib/dbus/machine-id:
-    bind-file: $SNAP_COMMON/machine-id
+    bind-file: $SNAP_COMMON/.machine-id
 
 parts:
   pi-libs:
