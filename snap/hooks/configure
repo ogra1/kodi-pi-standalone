@@ -1,3 +1,5 @@
 #! /bin/sh
 
-[ -e $SNAP_COMMON/.machine-id ] || $SNAP/bin/date +%s | $SNAP/usr/bin/md5sum | tr -d - >$SNAP_COMMON/.machine-id
+if [ ! -e $SNAP_COMMON/.machine-id ]; then
+  $SNAP/bin/date +%s | $SNAP/usr/bin/md5sum | tr -d - >$SNAP_COMMON/.machine-id
+fi
