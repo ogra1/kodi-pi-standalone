@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # make sure we have a machine-id (needed by netflix addon)
-[ "$(stat -c %s machine-id)" != "0" ] || $SNAP/usr/bin/uuidgen | tr -d - >$SNAP_COMMON/.machine-id
+[ "$($SNAP/usr/bin/stat -c %s $SNAP_COMMON/.machine-id)" != "0" ] || $SNAP/usr/bin/uuidgen | tr -d - >$SNAP_COMMON/.machine-id
 
 # always power on bluetooth if we can access it
 if snapctl is-connected bluez; then
