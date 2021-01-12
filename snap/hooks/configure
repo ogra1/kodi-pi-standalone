@@ -2,5 +2,5 @@
 
 if [ ! -e $SNAP_COMMON/.machine-id ]; then
 	UUID="$($SNAP/bin/date +%s | $SNAP/usr/bin/md5sum | $SNAP/usr/bin/tr -d -)"
-	echo "$UUID" >$SNAP_COMMON/.machine-id
+	echo "$UUID" >$SNAP_COMMON/.machine-id 2>&1
 fi
