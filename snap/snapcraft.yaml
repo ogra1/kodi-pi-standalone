@@ -64,6 +64,7 @@ apps:
       - upower-observe
       - vcio
 
+
 layout:
   /usr/lib/arm-linux-gnueabihf/kodi:
     bind: $SNAP/usr/lib/arm-linux-gnueabihf/kodi
@@ -439,7 +440,7 @@ parts:
     plugin: nil
     after: [ kodi ]
     stage-packages:
-      - uuid-runtime
+      - uuid
   bt-audio-helper:
     plugin: dump
     after: [ hook-helper ]
