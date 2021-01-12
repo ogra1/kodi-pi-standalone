@@ -436,14 +436,9 @@ parts:
       # drop useless dri drivers
       find ${SNAPCRAFT_PRIME}/usr/lib/arm-linux-gnueabihf/dri/ -type f -not -name 'vc4_dri.so' \
           -not -name 'v3d_dri.so' -not -name 'swrast_dri.so' -delete || tru
-  hook-helper:
-    plugin: nil
-    after: [ kodi ]
-    stage-packages:
-      - uuid-runtime
   bt-audio-helper:
     plugin: dump
-    after: [ hook-helper ]
+    after: [ kodi ]
     source: helpers
     stage-packages:
       - coreutils
