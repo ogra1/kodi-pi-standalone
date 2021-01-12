@@ -440,7 +440,7 @@ parts:
     plugin: nil
     after: [ kodi ]
     stage-packages:
-      - uuid
+      - uuid-runtime
   bt-audio-helper:
     plugin: dump
     after: [ hook-helper ]
