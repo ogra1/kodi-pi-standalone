@@ -5,14 +5,20 @@
 
 # always power on bluetooth if we can access it
 if snapctl is-connected bluez; then
-  $SNAP/bin/echo -e 'power on' | $SNAP/usr/bin/bluetoothctl >/dev/null 2>&1 || true
+  sleep 10 # give the bluez stack time to initialize
+
+  # power on bluetooth
+  $SNAP/bin/echo -e 'power on\nquit' | $SNAP/usr/bin/bluetoothctl 2>&1 || true
+
   # allow pulse to switch to BT audio devices on connect
   if snapctl is-connected audio-playback; then
-    # only load the module if it is not there yet
+    # only load the module if it is not there already
     if ! $SNAP/usr/bin/pactl list short | grep -q module-switch-on-connect; then
       $SNAP/usr/bin/pactl load-module module-switch-on-connect >/dev/null 2>&1 || true
-	fi
+    fi
   fi
-fi
 
-exec "$@"
+  # notify the user we have started
+  export PYTHONPATH="$SNAP/usr/lib/python3/dist-packages"
+  python3 $SNAP/usr/bin/kodi-send -a "Notification(Bluetooth,Service started,0,$SNAP/usr/share/pixmaps/bluetooth.png)"
+fi

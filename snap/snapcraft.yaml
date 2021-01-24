@@ -21,7 +21,7 @@ architectures:
 apps:
   kodi-pi-standalone:
     desktop: usr/share/applications/kodi.desktop
-    command: bin/desktop-launch $SNAP/bin/bt-launch $SNAP/usr/bin/kodi
+    command: bin/desktop-launch $SNAP/usr/bin/kodi
     daemon: simple
     restart-condition: always
     environment:
@@ -63,7 +63,20 @@ apps:
       - uhid
       - upower-observe
       - vcio
-
+  bt-helper:
+    command: bin/bt-launch
+    daemon: oneshot
+    environment:
+      LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
+      XDG_RUNTIME_DIR: "/tmp"
+    after:
+      - kodi-pi-standalone
+    plugs:
+      - audio-playback
+      - bluez
+      - bluetooth-control
+      - network
+      - network-bind
 
 layout:
   /usr/lib/arm-linux-gnueabihf/kodi:
@@ -443,3 +456,6 @@ parts:
     stage-packages:
       - coreutils
       - uuid-runtime
+    stage:
+      - -lib/arm-linux-gnueabihf/libsystemd.so.0.28.0
+      - -usr/share/doc/libsystemd0/changelog.Debian.gz
