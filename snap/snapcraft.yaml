@@ -90,6 +90,8 @@ layout:
     bind: $SNAP/usr/share/X11/xkb
   /var/lib/dbus/machine-id:
     bind-file: $SNAP_COMMON/.machine-id
+  /etc/samba/smb.conf:
+    bind-file: $SNAP/usr/share/samba/smb.conf
 
 parts:
   pi-libs:
