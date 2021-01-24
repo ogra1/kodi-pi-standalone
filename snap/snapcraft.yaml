@@ -28,6 +28,7 @@ apps:
       LD_LIBRARY_PATH: "$SNAP/lib:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri:$SNAP/usr/lib/kodi:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/oss4-libsalsa:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/samba:$SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/pulseaudio"
       PYTHONPATH: "$SNAP/usr/lib/python2.7:$SNAP/usr/lib/python2.7/plat-arm-linux-gnueabihf:$SNAP/usr/lib/python2.7/lib-tk:$SNAP/usr/lib/python2.7/lib-dynload:$SNAP/usr/lib/python2.7/dist-packages:$PYTHONPATH"
       HOME: $SNAP_COMMON
+      XDG_RUNTIME_DIR: "/tmp"
     plugs:
       - alsa
       - audio-record
