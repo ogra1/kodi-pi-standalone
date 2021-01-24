@@ -92,6 +92,8 @@ layout:
     bind-file: $SNAP_COMMON/.machine-id
   /etc/samba/smb.conf:
     bind-file: $SNAP/usr/share/samba/smb.conf
+  /etc/nsswitch.conf:
+    bind-file: $SNAP/etc/nsswitch.conf
 
 parts:
   pi-libs:
@@ -462,3 +464,6 @@ parts:
     stage:
       - -lib/arm-linux-gnueabihf/libsystemd.so.0.28.0
       - -usr/share/doc/libsystemd0/changelog.Debian.gz
+  mdns-fix:
+    plugin: dump
+    source: fixes
