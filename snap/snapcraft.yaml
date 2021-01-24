@@ -79,6 +79,13 @@ apps:
       - network
       - network-bind
 
+plugs:
+  services-content:
+    content: avahi-services
+    default-provider: avahi:services-content
+    interface: content
+    target: $SNAP_COMMON/avahi
+
 layout:
   /usr/lib/arm-linux-gnueabihf/kodi:
     bind: $SNAP/usr/lib/arm-linux-gnueabihf/kodi
@@ -94,6 +101,8 @@ layout:
     bind-file: $SNAP/usr/share/samba/smb.conf
   /etc/nsswitch.conf:
     bind-file: $SNAP/etc/nsswitch.conf
+  /etc/avahi/services:
+    symlink: $SNAP_COMMON/avahi
 
 parts:
   pi-libs:
