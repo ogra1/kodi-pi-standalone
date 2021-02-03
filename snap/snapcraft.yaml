@@ -11,7 +11,7 @@ description: |
   It ships with all default binary addons included.
 
 grade: stable
-confinement: strict
+confinement: devmode
 compression: lzo
 
 architectures:
@@ -21,7 +21,7 @@ architectures:
 apps:
   kodi-pi-standalone:
     desktop: usr/share/applications/kodi.desktop
-    command: bin/desktop-launch $SNAP/usr/bin/kodi
+    command: bin/check-core $SNAP/bin/desktop-launch $SNAP/usr/bin/kodi
     daemon: simple
     restart-condition: always
     environment:
@@ -473,6 +473,30 @@ parts:
     stage:
       - -lib/arm-linux-gnueabihf/libsystemd.so.0.28.0
       - -usr/share/doc/libsystemd0/changelog.Debian.gz
+      - -usr/lib/arm-linux-gnueabihf/gconv
+      - -lib/arm-linux-gnueabihf/ld-2.31.so
+      - -lib/arm-linux-gnueabihf/libBrokenLocale-2.31.so
+      - -lib/arm-linux-gnueabihf/libSegFault.so
+      - -lib/arm-linux-gnueabihf/libanl-2.31.so
+      - -lib/arm-linux-gnueabihf/libc-2.31.so
+      - -lib/arm-linux-gnueabihf/libdl-2.31.so
+      - -lib/arm-linux-gnueabihf/libm-2.31.so
+      - -lib/arm-linux-gnueabihf/libmemusage.so
+      - -lib/arm-linux-gnueabihf/libnsl-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_compat-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_dns-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_files-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_hesiod-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_nis-2.31.so
+      - -lib/arm-linux-gnueabihf/libnss_nisplus-2.31.so
+      - -lib/arm-linux-gnueabihf/libpcprofile.so
+      - -lib/arm-linux-gnueabihf/libpthread-2.31.so
+      - -lib/arm-linux-gnueabihf/libresolv-2.31.so
+      - -lib/arm-linux-gnueabihf/librt-2.31.so
+      - -lib/arm-linux-gnueabihf/libthread_db-1.0.so
+      - -lib/arm-linux-gnueabihf/libutil-2.31.so
+      - -usr/lib/arm-linux-gnueabihf/audit/sotruss-lib.so
+      - -usr/share/doc/libc6/changelog.Debian.gz
   mdns-fix:
     plugin: dump
     source: fixes
