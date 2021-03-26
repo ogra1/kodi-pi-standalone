@@ -439,6 +439,7 @@ parts:
       - libxslt1.1
       - pulseaudio-utils
       - python-pycryptodome
+      - python-pil
       - samba-libs
       - samba-common-bin
       - unzip
