@@ -131,7 +131,7 @@ parts:
       # force armhf
       sed -i 's/export SNAP_LAUNCHER/export ARCH="arm-linux-gnueabihf"\nexport SNAP_LAUNCHER/' bin/desktop-launch
       # do not try to update xdg links in home (HOME is SNAP_COMMON)
-      sed -i '/# Create links for user-dirs.dirs/,+21 s/^/#/' bin/desktop-launch
+      sed -i '/# Create links for user-dirs.dirs/,+22 s/^/#/' bin/desktop-launch
   libcec:
     plugin: cmake
     after: [ pi-libs ]
@@ -151,6 +151,7 @@ parts:
       - LD_LIBRARY_PATH: "$LD_LIBRARY_PATH:${SNAPCRAFT_STAGE}/usr/lib"
     override-build: |
       # build p8-platform submodule first
+      cp -a $SNAPCRAFT_PART_SRC/* .
       cd src/platform
       mkdir build
       cd build
@@ -182,7 +183,7 @@ parts:
       - -DWITH_ARCH=armv7l
       - -DCMAKE_PREFIX_PATH=${SNAPCRAFT_STAGE}/usr
       - -DENABLE_OPENGLES=ON
-      - -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+      - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DENABLE_AIRTUNES=ON
       - -DENABLE_ALSA=ON
@@ -339,8 +340,10 @@ parts:
     override-build: |
       snapcraftctl build
       # build addons
-      make -j4 -C tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr
+      echo "###############################  building addons ###########################"
+      make -j4 -C $SNAPCRAFT_PART_SRC/tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr ADDONS_TO_BUILD="all"
       # move addons to correct install path
+      echo "############################### trying to move addons ######################"
       mv ${SNAPCRAFT_PART_INSTALL}/usr/lib/kodi/addons \
           ${SNAPCRAFT_PART_INSTALL}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/kodi/
       # fix desktop file
