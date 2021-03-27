@@ -341,7 +341,7 @@ parts:
       snapcraftctl build
       # build addons
       echo "###############################  building addons ###########################"
-      make -j4 -C $SNAPCRAFT_PART_SRC/tools/depends/target/binary-addons PREFIX=$SNAPCRAFT_PART_INSTALL/usr ADDONS_TO_BUILD="all"
+      make -j4 -C ${SNAPCRAFT_PART_SRC}/tools/depends/target/binary-addons PREFIX=${SNAPCRAFT_PART_INSTALL}/usr ADDONS_TO_BUILD="all"
       # move addons to correct install path
       echo "############################### trying to move addons ######################"
       mv ${SNAPCRAFT_PART_INSTALL}/usr/lib/kodi/addons \
@@ -350,7 +350,7 @@ parts:
       sed -i 's;^Icon=kodi;Icon=/usr/share/icons/hicolor/256x256/apps/kodi.png;' \
           $SNAPCRAFT_PART_INSTALL/usr/share/applications/kodi.desktop
       # set version
-      VER="$(grep VERSION_CODE version.txt | sed 's/^.* //')"
+      VER="$(grep VERSION_CODE ${SNAPCRAFT_PART_SRC}/version.txt | sed 's/^.* //')"
       snapcraftctl set-version $VER
     stage-packages:
       - apulse
