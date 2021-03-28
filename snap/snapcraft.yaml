@@ -275,6 +275,7 @@ parts:
       - liblzo2-dev
       - libmicrohttpd-dev
       - libmp3lame-dev
+      - libmpeg2-4-dev
       - libmysofa-dev
       - libnfs-dev
       - libomxil-bellagio-dev
@@ -400,6 +401,7 @@ parts:
       - liblirc-client0
       - liblzo2-2
       - libmicrohttpd12
+      - libmpeg2-4
       - libmtdev1
       - libmysqlclient21
       - libnfs13
