@@ -372,6 +372,7 @@ parts:
       - libdrm2
       - libegl1
       - libevdev2
+      - libexpat1
       - libflac8
       - libfontconfig1
       - libfreetype6
