@@ -427,6 +427,7 @@ parts:
       - libtdb1
       - libtevent0
       - libtinyxml2.6.2v5
+      - libudev1
       - libvorbis0a
       - libvorbisenc2
       - libwacom2
