@@ -368,6 +368,7 @@ parts:
       - libc6
       - libcdio18
       - libcurl3-gnutls
+      - libdbus-1-3
       - libdrm2
       - libegl1
       - libevdev2
@@ -408,6 +409,7 @@ parts:
       - libnss3
       - libnspr4
       - libogg-dbg
+      - libpcre2-8-0
       - libpcrecpp0v5
       - libpng16-16
       - libpsl5
