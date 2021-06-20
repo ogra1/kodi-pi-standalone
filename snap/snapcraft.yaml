@@ -50,7 +50,7 @@ apps:
       - opengl
       - optical-drive
       - process-control
-      - raw-input
+        #- raw-input
       - raw-usb
       - removable-media
       - screen-inhibit-control
