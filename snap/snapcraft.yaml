@@ -37,14 +37,11 @@ apps:
       - bluetooth-control
       - bluez
       - camera
-      - desktop
-      - device-buttons
       - dvb
       - framebuffer
       - hardware-observe
       - home
       - hostname-control
-      - jack1
       - joystick
       - mount-observe
       - network
@@ -53,6 +50,7 @@ apps:
       - opengl
       - optical-drive
       - process-control
+      - raw-input
       - raw-usb
       - removable-media
       - screen-inhibit-control
@@ -61,7 +59,6 @@ apps:
       - time-control
       - timezone-control
       - udisks2
-      - uhid
       - upower-observe
       - vcio
   bt-helper:
@@ -366,7 +363,9 @@ parts:
       - libbluetooth3
       - libbluray2
       - libbrotli1
+      - libcap2
       - libc-bin
+      - libc6
       - libcdio18
       - libcurl3-gnutls
       - libdrm2
@@ -417,6 +416,7 @@ parts:
       - libroken18-heimdal
       - librtmp1
       - libsasl2-2
+      - libselinux1
       - libsmbclient
       - libsndfile1
       - libssh-4
