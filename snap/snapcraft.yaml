@@ -438,6 +438,7 @@ parts:
       - libsmartcols1
       - libsmbclient
       - libsndfile1
+      - libsqlite3-0
       - libssh-4
       - libssl1.1
       - libsystemd0
