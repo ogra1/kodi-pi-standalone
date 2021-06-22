@@ -391,6 +391,7 @@ parts:
       - libgl1-mesa-dri
       - libgles2
       - libglx0
+      - libgnutls30
       - libgpg-error0
       - libgraphite2-3
       - libgssapi3-heimdal
