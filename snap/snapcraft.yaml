@@ -443,6 +443,7 @@ parts:
       - libsqlite3-0
       - libssh-4
       - libssl1.1
+      - libstdc++6
       - libsystemd0
       - libtag1v5-vanilla
       - libtalloc2
