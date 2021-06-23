@@ -420,6 +420,7 @@ parts:
       - libmysqlclient21
       - libncurses6
       - libncursesw6
+      - libnettle7
       - libnfs13
       - libnghttp2-14
       - libnss3
