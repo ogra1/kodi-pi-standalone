@@ -365,6 +365,7 @@ parts:
       - libbluetooth3
       - libbluray2
       - libbrotli1
+      - libbsd0
       - libbz2-1.0
       - libcap2
       - libcap-ng0
