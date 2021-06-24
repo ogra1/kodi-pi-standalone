@@ -350,6 +350,9 @@ parts:
       # set version
       VER="$(grep VERSION_CODE ${SNAPCRAFT_PART_SRC}/version.txt | sed 's/^.* //')"
       snapcraftctl set-version $VER
+      # add core20 libs
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/lib/${SNAPCRAFT_ARCH_TRIPLET}
+      cp -av /snap/core20/current/lib/${SNAPCRAFT_ARCH_TRIPLET}/* ${SNAPCRAFT_PART_INSTALL}/lib/${SNAPCRAFT_ARCH_TRIPLET}/
     stage-packages:
       - apulse
       - bluez
