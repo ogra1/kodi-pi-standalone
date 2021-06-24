@@ -395,6 +395,7 @@ parts:
       - libgnutls30
       - libgpg-error0
       - libgraphite2-3
+      - libgssapi-krb5-2
       - libgssapi3-heimdal
       - libgudev-1.0-0
       - libharfbuzz0b
